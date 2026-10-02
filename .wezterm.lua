@@ -3,10 +3,15 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
 
--- Windows
--- TODO: cross platform
--- config.default_prog = { 'C:\\Users\\reiakwa\\AppData\\Local\\Programs\\nu\\bin\\nu.exe' }
-config.default_prog = { 'pwsh' }
+-- Cross-platform shell
+local is_windows = wezterm.target_triple:find 'windows' ~= nil
+if is_windows then
+    -- config.default_prog = { 'nu' }
+    config.default_prog = { 'pwsh' }
+else
+    -- config.default_prog = { 'nu' }
+    config.default_prog = { os.getenv 'SHELL' or 'bash' }
+end
 
 config.font = wezterm.font_with_fallback { 'IosevkaTerm Nerd Font', 'Sarasa Term Sc' }
 config.font_size = 13
@@ -165,8 +170,21 @@ config.keys = {
 -- cyan = '#789eb1'
 -- gray = '#C2C2C2'
 
-config.color_scheme_dirs = { 'C:/Users/reiakwa/.config/wezterm/themes' }
-config.color_scheme = 'wezterm_alice_sunny'
+-- Locate the bundled themes whether the config is loaded from the repo
+-- (config_dir/theme) or from the installed location (config_dir/themes, ~/.config/wezterm).
+local theme_candidates = {
+    wezterm.config_dir .. '/themes',
+    wezterm.config_dir .. '/theme',
+    wezterm.home_dir .. '/.config/wezterm/themes',
+    wezterm.home_dir .. '/.config/wezterm/theme',
+}
+for _, dir in ipairs(theme_candidates) do
+    if #wezterm.glob(dir .. '/*.toml') > 0 then
+        config.color_scheme_dirs = { dir }
+        break
+    end
+end
+config.color_scheme = 'alice-sunny'
 
 -- config.color_schemes = {
 --     ['Alice Sunny'] = {
