@@ -94,16 +94,6 @@ config.keys = {
     },
 
     {
-        key = 'v',
-        mods = 'CTRL|SHIFT',
-        action = act.SplitVertical { domain = "CurrentPaneDomain" },
-    },
-    {
-        key = 'g',
-        mods = 'CTRL|SHIFT',
-        action = act.SplitHorizontal { domain = "CurrentPaneDomain" },
-    },
-    {
         key = 'q',
         mods = 'CTRL|SHIFT',
         action = act.CloseCurrentPane { confirm = true },
