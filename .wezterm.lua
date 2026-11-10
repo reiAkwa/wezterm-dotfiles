@@ -13,7 +13,7 @@ else
     config.default_prog = { os.getenv 'SHELL' or 'bash' }
 end
 
-config.font = wezterm.font_with_fallback { 'IosevkaTerm Nerd Font', 'Sarasa Term Sc' }
+config.font = wezterm.font_with_fallback { 'IosevkaTerm Nerd Font', 'Sarasa Term SC' }
 config.font_size = 13
 
 -- 什么样丧心病狂的终端才会把默认键位绑到 Ctrl+Shift 上啊！！！
